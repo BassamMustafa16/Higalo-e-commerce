@@ -1,7 +1,7 @@
 import BannerSlider from "@/components/homePage/BannerSlider";
 import BestSeller from "@/components/homePage/BestSeller";
 import Categories from "@/components/homePage/Categories";
-import Hero from "@/components/homePage/Hero";
+// import Hero from "@/components/homePage/Hero";
 import NewArrivals from "@/components/homePage/NewArrivals";
 import Policies from "@/components/homePage/Policies";
 
