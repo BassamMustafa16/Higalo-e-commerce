@@ -11,7 +11,7 @@ export default function Test() {
         console.log("✅ Backend says:", res.data);
         setMessage(res.data);
       } catch (err) {
-        console.error("❌ Error fetching from backend:", err);
+        console.error("❌ Error fetching from your backend:", err);
       }
     };
 
