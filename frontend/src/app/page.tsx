@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-8">
       {/* Hero Section */}
-      <Hero />
+      {/* <Hero /> */}
       {/* Categories  */}
       <Categories />
       {/* Best Sellers of the Month  */}
