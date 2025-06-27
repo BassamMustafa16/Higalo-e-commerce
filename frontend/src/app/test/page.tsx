@@ -7,7 +7,7 @@ export default function Test() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/`);
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`);
         console.log("✅ Backend says:", res.data);
         setMessage(res.data);
       } catch (err) {
