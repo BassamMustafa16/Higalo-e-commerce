@@ -1,15 +1,15 @@
-"use client"
-import { useEffect } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Test() {
+  const [message, setMessage] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/`
-        );
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/`);
         console.log("✅ Backend says:", res.data);
+        setMessage(res.data);
       } catch (err) {
         console.error("❌ Error fetching from backend:", err);
       }
@@ -21,7 +21,7 @@ export default function Test() {
   return (
     <div>
       <h1>Frontend</h1>
-      <p>Open your console to see the message from the backend.</p>
+      <p>Your Backend Says {message}</p>
     </div>
   );
 }
