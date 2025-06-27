@@ -1,3 +1,4 @@
+"use client"
 import api from "@/lib/api";
 export default function Test() {
   const fetchData = async () => {
