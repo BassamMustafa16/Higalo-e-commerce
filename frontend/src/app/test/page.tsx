@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Test() {
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +21,7 @@ export default function Test() {
   return (
     <div>
       <h1>Frontend</h1>
-      <p>Your Backend Says {message}</p>
+      <p>Your Backend Says {JSON.stringify(message)}</p>
     </div>
   );
 }
