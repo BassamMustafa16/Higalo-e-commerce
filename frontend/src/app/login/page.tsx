@@ -1,5 +1,3 @@
-import Link from "next/link";
-import axios from "axios";
 import LoginForm from "@/components/loginPage/loginForm";
 
 export default function LoginPage() {
