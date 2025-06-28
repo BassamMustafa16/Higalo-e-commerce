@@ -26,7 +26,15 @@ export default function HeaderMiddleBar() {
       </div>
       {/* Favorite & Cart Icons */}
       <div className="flex flex-row gap-2">
-        <Link href="/test" aria-label="Favorites">
+        <Link href="/login" className="md:hidden flex flex-row gap-2">
+          <Image
+            width={24}
+            height={24}
+            src={`${imagePaths.icon}/user.svg`}
+            alt="User Icon"
+          />
+        </Link>
+        <Link href="/" aria-label="Favorites">
           <Image
             width={24}
             height={24}
