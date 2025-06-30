@@ -26,10 +26,13 @@ export default function LoginForm() {
     if (Object.keys(newErrors).length > 0) return;
     // Login
     try {
-      const res = await axios.post("http://localhost:5000/user/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
+        {
+          email,
+          password,
+        }
+      );
       // Success logic
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstName", res.data.user.firstName);

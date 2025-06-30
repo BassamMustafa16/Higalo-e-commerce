@@ -49,12 +49,15 @@ export default function RegisterForm() {
     if (Object.keys(newErrors).length > 0) return;
     // Submit logic...
     try {
-      const res = await axios.post("http://localhost:5000/user/register", {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/user/register`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        }
+      );
       if (res.status === 201) router.push("/login");
     } catch (err) {
       console.log(`Error creating user - ${err}`);
