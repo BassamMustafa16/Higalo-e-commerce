@@ -1,18 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import clearStorage from "@/lib/clearStorage";
 
 export default function AccountPage() {
   const router = useRouter();
-  const [userName, setUserName] = useState<string | null>(null);
-
-  useEffect(() => {
-    setUserName(localStorage.getItem("firstName"));
-  }, []);
+  const { userName, setUserName } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("firstName");
+    clearStorage();
+    setUserName(null);
     router.push("/");
   };
 

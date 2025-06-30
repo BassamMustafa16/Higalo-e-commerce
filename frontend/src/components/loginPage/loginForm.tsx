@@ -3,9 +3,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { validateFields } from "@/lib/validateFields";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import axios from "axios";
 export default function LoginForm() {
   const router = useRouter();
+  const { setUserName } = useAuth();
   const [termsConfirmed, setTermsConfirmed] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +39,7 @@ export default function LoginForm() {
       // Success logic
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstName", res.data.user.firstName);
+      setUserName(res.data.user.firstName);
       router.push("/");
     } catch (err) {
       // Axios error: err.response.data.message contains your backend message

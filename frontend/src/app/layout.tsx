@@ -5,15 +5,8 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
+import { AuthProvider } from "@/contexts/AuthContext";
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -34,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${workSans.variable} font-sans`}>
-        <Header />
-        {children}
-        <Footer />
+        <AuthProvider>
+          <Header />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
