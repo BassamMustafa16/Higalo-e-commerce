@@ -13,7 +13,7 @@ export default function Account() {
   };
 
   return (
-    <div onClick={handleClick} aria-label="User">
+    <div onClick={handleClick} aria-label="User" className="cursor-pointer">
       <Image
         width={24}
         height={24}

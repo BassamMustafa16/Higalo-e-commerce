@@ -6,6 +6,7 @@ import { useState } from "react";
 import axios from "axios";
 export default function LoginForm() {
   const router = useRouter();
+  const [termsConfirmed, setTermsConfirmed] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showPassword, setShowPassword] = useState(false);
 
@@ -57,17 +58,19 @@ export default function LoginForm() {
   };
   return (
     <form
-      className="flex flex-col gap-3 border rounded-xl border-gray-400 p-5 max-w-sm w-full"
+      className="flex flex-col gap-3 border rounded-xl border-gray-400 p-5 max-w-sm w-full lg:border-none lg:p-0"
       onSubmit={handleSubmit}
       noValidate
     >
       {/* Email */}
-      <label htmlFor="emailInput">*Email:</label>
+      <label htmlFor="emailInput" className="text-[#555555]">
+        Email<span className="text-red-500">*</span>
+      </label>
       <input
         id="emailInput"
         name="email"
         type="email"
-        placeholder="Enter your email"
+        placeholder="Type your email"
         className="border border-gray-400 rounded-md px-3 py-1"
         required
       />
@@ -75,13 +78,15 @@ export default function LoginForm() {
         <span className="text-xs text-red-600">{errors.email}</span>
       )}
       {/* Password */}
-      <label htmlFor="passwordInput">*Password</label>
+      <label htmlFor="passwordInput" className="text-[#555555]">
+        Password<span className="text-orange">*</span>
+      </label>
       <div className="relative">
         <input
           id="passwordInput"
           name="password"
           type={showPassword ? "text" : "password"}
-          placeholder="Enter your password"
+          placeholder="Type your password"
           className="border border-gray-400 rounded-md px-3 py-1 w-full"
           required
         />
@@ -109,21 +114,45 @@ export default function LoginForm() {
         </div>
       </div>
       {errors.password && (
-        <span className="text-xs text-red-600">{errors.password}</span>
+        <span className="text-xs text-orange">{errors.password}</span>
       )}
-      <button
-        type="submit"
-        className="rounded-md bg-darkBlue text-white py-2 px-4 font-semibold mt-2 cursor-pointer"
-      >
-        Login
-      </button>
-      <p className="text-center">Or</p>
-      <Link href="/register" className="">
+
+      {/* Termes Confirmation */}
+      <div className="flex flex-row gap-2 items-start">
+        <input
+          id="termsConfirmationInput"
+          type="checkbox"
+          checked={termsConfirmed}
+          className="mt-1"
+          onChange={() => setTermsConfirmed(!termsConfirmed)}
+        />
+        <label htmlFor="termsConfirmationInput" className="text-xs">
+          By using this form you agree with the storage and handling of your
+          data by this website.
+        </label>
+      </div>
+
+      {/* Buttons */}
+      <div className="w-full flex flex-row justify-between items-center gap-5">
         <button
-          type="button"
-          className="rounded-md bg-darkBlue text-white py-2 px-4 font-semibold w-full cursor-pointer"
+          type="submit"
+          disabled={!termsConfirmed}
+          title={!termsConfirmed ? "You must agree to the terms to login" : ""}
+          className="flex-1 rounded-md bg-orange text-white py-2 px-4 font-semibold mt-2 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 text-sm"
         >
-          Register Now
+          Sign In
+        </button>
+        <Link href="resetPassword" className="flex-1 text-right">
+          <span className="text-orange underline underline-offset-3 text-xs">
+            Forgot Password
+          </span>
+        </Link>
+      </div>
+
+      {/* Creat An Account Button */}
+      <Link href="/register" className="w-full">
+        <button className="bg-orange text-white py-2 px-4 font-semibold text-sm rounded-md w-full">
+          Create An Account
         </button>
       </Link>
     </form>
