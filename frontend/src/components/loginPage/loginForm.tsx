@@ -1,12 +1,15 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { validateFields } from "@/lib/validateFields";
 import { useState } from "react";
+import axios from "axios";
 export default function LoginForm() {
+  const router = useRouter();
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Extract data
     const form = e.currentTarget;
@@ -21,7 +24,33 @@ export default function LoginForm() {
     });
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
-    // Submit logic...
+    // Login
+    try {
+      const res = await axios.post("http://localhost:5000/user/login", {
+        email,
+        password,
+      });
+      // Success logic
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("firstName", res.data.user.firstName);
+      router.push("/");
+    } catch (err) {
+      // Axios error: err.response.data.message contains your backend message
+      if (
+        axios.isAxiosError(err) &&
+        err.response &&
+        err.response.data &&
+        typeof err.response.data === "object" &&
+        "message" in err.response.data
+      ) {
+        if (err.response.data.message === "Invalid credentials")
+          setErrors({ email: err.response.data.message });
+        else if (err.response.data.message === "Incorrect password")
+          setErrors({ password: err.response.data.message });
+      } else {
+        alert("An unexpected error occurred.");
+      }
+    }
   };
   return (
     <form
@@ -81,7 +110,7 @@ export default function LoginForm() {
       )}
       <button
         type="submit"
-        className="rounded-md bg-darkBlue text-white py-2 px-4 font-semibold mt-2"
+        className="rounded-md bg-darkBlue text-white py-2 px-4 font-semibold mt-2 cursor-pointer"
       >
         Login
       </button>
@@ -89,7 +118,7 @@ export default function LoginForm() {
       <Link href="/register" className="">
         <button
           type="button"
-          className="rounded-md bg-darkBlue text-white py-2 px-4 font-semibold w-full"
+          className="rounded-md bg-darkBlue text-white py-2 px-4 font-semibold w-full cursor-pointer"
         >
           Register Now
         </button>

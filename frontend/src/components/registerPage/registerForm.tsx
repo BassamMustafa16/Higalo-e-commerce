@@ -1,8 +1,11 @@
 "use client";
 import { useState } from "react";
 import { validateFields } from "@/lib/validateFields";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -25,7 +28,7 @@ export default function RegisterForm() {
   const matchedPassword = password === confirmPassword && validPassword;
 
   // Handle Submit
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //Extract data
     const form = e.currentTarget;
@@ -45,6 +48,18 @@ export default function RegisterForm() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
     // Submit logic...
+    try {
+      const res = await axios.post("http://localhost:5000/user/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      if (res.status === 201) router.push("/login");
+    } catch (err) {
+      console.log(`Error creating user - ${err}`);
+      return;
+    }
   };
 
   return (

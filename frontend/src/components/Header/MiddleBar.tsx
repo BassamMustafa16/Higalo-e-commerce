@@ -3,6 +3,8 @@ import Link from "next/link";
 import imagePaths from "@/constants/imagePaths";
 import SearchForm from "./middleBarHeader/SearchForm";
 import Cart from "./middleBarHeader/Cart";
+import Account from "./middleBarHeader/Account";
+
 export default function HeaderMiddleBar() {
   return (
     <div className="h-[62px] lg:h-[140px] border-white flex flex-row gap-5 lg:gap-15 w-full justify-between items-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 bg-darkBlue ">
@@ -26,22 +28,16 @@ export default function HeaderMiddleBar() {
       </div>
       {/* Favorite & Cart Icons */}
       <div className="flex flex-row gap-2">
+        <Account />
         <Link href="/login" className="md:hidden flex flex-row gap-2">
           <Image
             width={24}
             height={24}
-            src={`${imagePaths.icon}/user.svg`}
-            alt="User Icon"
-          />
-        </Link>
-        <Link href="/" aria-label="Favorites">
-          <Image
-            width={24}
-            height={24}
             src={`${imagePaths.icon}/favorite.svg`}
-            alt="Favorite icon"
+            alt="Favorite Icon"
           />
         </Link>
+
         <Cart />
       </div>
     </div>
