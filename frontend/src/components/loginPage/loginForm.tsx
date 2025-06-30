@@ -48,7 +48,7 @@ export default function LoginForm() {
         else if (err.response.data.message === "Incorrect password")
           setErrors({ password: err.response.data.message });
       } else {
-        alert("An unexpected error occurred.");
+        alert(`An unexpected error occurred. - ${err}`);
       }
     }
   };

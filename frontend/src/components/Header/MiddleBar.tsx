@@ -29,7 +29,7 @@ export default function HeaderMiddleBar() {
       {/* Favorite & Cart Icons */}
       <div className="flex flex-row gap-2">
         <Account />
-        <Link href="/login" className="md:hidden flex flex-row gap-2">
+        <Link href="/login" className="flex flex-row gap-2">
           <Image
             width={24}
             height={24}
