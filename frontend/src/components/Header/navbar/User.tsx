@@ -11,7 +11,7 @@ export default function User() {
     else router.push("/login");
   };
   return (
-    <div onClick={handleClick} className="flex flex-row gap-2">
+    <div onClick={handleClick} className="flex flex-row gap-2 cursor-pointer" >
       <Image
         width={24}
         height={24}

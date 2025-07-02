@@ -5,12 +5,14 @@ import { validateFields } from "@/lib/validateFields";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import axios from "axios";
+import Loader from "../Loader";
 export default function LoginForm() {
   const router = useRouter();
   const { setUserName } = useAuth();
   const [termsConfirmed, setTermsConfirmed] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +30,7 @@ export default function LoginForm() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
     // Login
+    setLoading(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
@@ -39,7 +42,10 @@ export default function LoginForm() {
       // Success logic
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstName", res.data.user.firstName);
+      localStorage.setItem("userId", res.data.user.id);
+
       setUserName(res.data.user.firstName);
+      setLoading(false);
       router.push("/");
     } catch (err) {
       // Axios error: err.response.data.message contains your backend message
@@ -57,6 +63,7 @@ export default function LoginForm() {
       } else {
         alert(`An unexpected error occurred. - ${err}`);
       }
+      setLoading(false);
     }
   };
   return (
@@ -65,6 +72,9 @@ export default function LoginForm() {
       onSubmit={handleSubmit}
       noValidate
     >
+      {/* Loader */}
+      {loading && <Loader />}
+
       {/* Email */}
       <label htmlFor="emailInput" className="text-[#555555]">
         Email<span className="text-red-500">*</span>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { validateFields } from "@/lib/validateFields";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loader from "../Loader";
 
 export default function RegisterForm() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [loading, setLoading] = useState(false);
 
   // Password requirments
   const capitalRegex = /[A-Z]/;
@@ -48,6 +50,7 @@ export default function RegisterForm() {
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
     // Submit logic...
+    setLoading(true);
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/user/register`,
@@ -58,9 +61,11 @@ export default function RegisterForm() {
           password,
         }
       );
+      setLoading(false);
       if (res.status === 201) router.push("/login");
     } catch (err) {
       console.log(`Error creating user - ${err}`);
+      setLoading(false);
       return;
     }
   };
@@ -71,6 +76,8 @@ export default function RegisterForm() {
       onSubmit={handleSubmit}
       noValidate
     >
+      {/* Loader */}
+      {loading && <Loader />}
       {/* Personal Information */}
       <div className="flex flex-col gap-3 flex-1">
         <h2 className="text-lg hidden lg:block text-left w-full font-semibold">

@@ -7,7 +7,6 @@ import Footer from "@/components/Footer/Footer";
 
 import { AuthProvider } from "@/contexts/AuthContext";
 
-
 const workSans = Work_Sans({
   subsets: ["latin"],
   variable: "--font-work-sans",
