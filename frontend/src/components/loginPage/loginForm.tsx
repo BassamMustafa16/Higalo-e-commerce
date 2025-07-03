@@ -5,7 +5,7 @@ import { validateFields } from "@/lib/validateFields";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import axios from "axios";
-import Loader from "../Loader";
+import Loader from "../loaders/Loader";
 
 export default function LoginForm() {
   const router = useRouter();

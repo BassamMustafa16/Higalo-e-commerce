@@ -2,7 +2,7 @@
 import Image from "next/image";
 import imagePaths from "@/constants/imagePaths";
 import Link from "next/link";
-import Loader from "../Loader";
+import Loader from "../loaders/Loader";
 import { useCategories } from "@/contexts/dataContext";
 
 export default function Categories() {

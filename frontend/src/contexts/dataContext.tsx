@@ -6,7 +6,7 @@ import { Category, Subcategories } from "@/types/db";
 
 type CategoryContextType = {
   categories: Category[];
-  subcategories: Subcategories[],
+  subcategories: Subcategories[];
   loading: boolean;
   error: string | null;
 };

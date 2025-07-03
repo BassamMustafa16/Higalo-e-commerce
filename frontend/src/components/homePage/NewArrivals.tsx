@@ -4,7 +4,7 @@ import ProductImage from "./ProductImage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Product } from "@/types/db";
-import Loader from "../Loader";
+import Loader from "../loaders/Loader";
 
 export default function NewArrivals() {
   const [newArrivals, setNewArrivals] = useState<Product[]>([]);
@@ -16,7 +16,6 @@ export default function NewArrivals() {
           `${process.env.NEXT_PUBLIC_API_URL}/products/new-arrivals`
         );
         if (res.status === 200) setNewArrivals(Array.from(res.data));
-        console.log(newArrivals);
       } catch (err) {
         console.log(err);
       } finally {

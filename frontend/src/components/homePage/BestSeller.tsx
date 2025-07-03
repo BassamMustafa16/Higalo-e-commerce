@@ -3,7 +3,7 @@ import axios from "axios";
 import ProductImage from "./ProductImage";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/db";
-import Loader from "../Loader";
+import Loader from "../loaders/Loader";
 
 export default function BestSeller() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,7 +15,6 @@ export default function BestSeller() {
           `${process.env.NEXT_PUBLIC_API_URL}/products/best-sellers`
         );
         if (res.status === 200) setProducts(Array.from(res.data));
-        console.log(products);
       } catch (err) {
         console.log(err);
       } finally {

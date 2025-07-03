@@ -15,7 +15,6 @@ interface DropdownCategoryProps {
 
 export default function DropdownCategory({ category }: DropdownCategoryProps) {
   const { subcategories } = useCategories();
-  console.log(subcategories);
   const [isShowSubcategory, setIsShowSubcategory] = useState(false);
 
   return (

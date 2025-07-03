@@ -3,7 +3,7 @@ import { useState } from "react";
 import { validateFields } from "@/lib/validateFields";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Loader from "../Loader";
+import Loader from "../loaders/Loader";
 
 export default function RegisterForm() {
   const router = useRouter();
