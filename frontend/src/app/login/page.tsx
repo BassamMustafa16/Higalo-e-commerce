@@ -21,7 +21,7 @@ export default function LoginPage() {
           than one address, track orders and more.
         </p>
         <Link href="/register" className="w-full">
-          <button className="bg-orange text-white py-2 px-4 font-semibold text-sm rounded-md w-full">
+          <button className="bg-orange text-white py-2 px-4 font-semibold text-sm rounded-md w-full cursor-pointer">
             Create An Account
           </button>
         </Link>

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import axios from "axios";
 import Loader from "../Loader";
+
 export default function LoginForm() {
   const router = useRouter();
   const { setUserName } = useAuth();
@@ -33,7 +34,7 @@ export default function LoginForm() {
     setLoading(true);
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/user/login`,
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
         {
           email,
           password,
@@ -43,6 +44,7 @@ export default function LoginForm() {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("firstName", res.data.user.firstName);
       localStorage.setItem("userId", res.data.user.id);
+      localStorage.setItem("role", res.data.user.role);
 
       setUserName(res.data.user.firstName);
       setLoading(false);
