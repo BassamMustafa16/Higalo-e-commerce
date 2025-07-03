@@ -1,10 +1,27 @@
+"use client";
 import Link from "next/link";
-import poroducts from "@/constants/products";
 import ProductImage from "./ProductImage";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Product } from "@/types/db";
+
 export default function NewArrivals() {
-  const filterdProducts = poroducts.filter(
-    (product) => product.ribbon === "New"
-  );
+  const [newArrivals, setNewArrivals] = useState<Product[]>([]);
+  useEffect(() => {
+    async function fetchNewArrivals() {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/new-arrivals`
+        );
+        if (res.status === 200) setNewArrivals(Array.from(res.data));
+        console.log(newArrivals);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchNewArrivals();
+  }, []);
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
       {/* Heading */}
@@ -19,7 +36,7 @@ export default function NewArrivals() {
       </div>
       {/* Content */}
       <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {filterdProducts.map((product) => (
+        {newArrivals.map((product) => (
           <div
             key={product.id}
             className="flex flex-col md:flex-row gap-5 w-[100%] bg-white rounded-2xl h-fit"
@@ -47,7 +64,7 @@ export default function NewArrivals() {
               <p
                 className="text-xs text-gray-500 w-full"
                 dangerouslySetInnerHTML={{
-                  __html: product.describtion.replace(/\n/g, "<br />"),
+                  __html: product.description.replace(/\n/g, "<br />"),
                 }}
               />
             </div>

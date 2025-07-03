@@ -2,21 +2,7 @@
 import axios from "axios";
 import ProductImage from "./ProductImage";
 import { useEffect, useState } from "react";
-
-type Product = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  ribbon: string;
-  category: string;
-  discount: boolean;
-  originalPrice: number | null;
-  percentage: number | null;
-  description: string;
-  inventory: number;
-  itemsSold: number;
-};
+import { Product } from "@/types/db";
 
 export default function BestSeller() {
   const [products, setProducts] = useState<Product[]>([]);

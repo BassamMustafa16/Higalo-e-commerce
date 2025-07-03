@@ -1,0 +1,14 @@
+export type Product = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  ribbon: string;
+  category: string;
+  discount: boolean;
+  originalPrice: number | null;
+  percentage: number | null;
+  description: string;
+  inventory: number;
+  itemsSold: number;
+};
