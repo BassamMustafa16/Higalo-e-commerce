@@ -4,9 +4,11 @@ import ProductImage from "./ProductImage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Product } from "@/types/db";
+import Loader from "../Loader";
 
 export default function NewArrivals() {
   const [newArrivals, setNewArrivals] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchNewArrivals() {
       try {
@@ -17,6 +19,8 @@ export default function NewArrivals() {
         console.log(newArrivals);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -24,6 +28,9 @@ export default function NewArrivals() {
   }, []);
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      {/* Loading */}
+      {loading && <Loader />}
+
       {/* Heading */}
       <div className="flex flex-row justify-between">
         <h2 className="text-darkBlue md:text-xl lg:text-2xl font-semibold">

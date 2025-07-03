@@ -3,12 +3,12 @@
 import imagePaths from "@/constants/imagePaths";
 import Image from "next/image";
 import DropdownCategory from "./DropdownCategory";
-import categories from "@/constants/categories";
+import { useCategories } from "@/contexts/dataContext";
 import { useState } from "react";
 
 export default function SearchForm() {
+  const { categories } = useCategories();
   const [isShowCategories, setIsShowCategories] = useState(false);
-
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

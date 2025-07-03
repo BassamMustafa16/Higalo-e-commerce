@@ -12,3 +12,12 @@ export type Product = {
   inventory: number;
   itemsSold: number;
 };
+export type Category = {
+  id: string;
+  name: string;
+};
+export type Subcategories = {
+  id: string;
+  name: string;
+  categoryId: string;
+};

@@ -1,8 +1,10 @@
 import Image from "next/image";
 import imagePaths from "@/constants/imagePaths";
 import { useState } from "react";
+import { useCategories } from "@/contexts/dataContext";
 
 interface Category {
+  id: string;
   name: string;
   // add other properties if needed
 }
@@ -12,18 +14,10 @@ interface DropdownCategoryProps {
 }
 
 export default function DropdownCategory({ category }: DropdownCategoryProps) {
+  const { subcategories } = useCategories();
+  console.log(subcategories);
   const [isShowSubcategory, setIsShowSubcategory] = useState(false);
 
-  const dummySubcategories = [
-    { id: 1, name: "Honey & Detox Tea", category: "Tea House" },
-    { id: 2, name: "Tea & Coffee Acc", category: "Tea House" },
-    { id: 3, name: "Loose Tea & Herbs", category: "Tea House" },
-    { id: 4, name: "Tiki", category: "Tea House" },
-    { id: 5, name: "For Girls", category: "Games & Toys" },
-    { id: 6, name: "Lego & Puzzle", category: "Games & Toys" },
-    { id: 7, name: "Educational Toys", category: "Games & Toys" },
-    { id: 8, name: "Others", category: "Games & Toys" },
-  ];
   return (
     <li className="p-2 flex flex-col cursor-pointer">
       <div
@@ -47,8 +41,8 @@ export default function DropdownCategory({ category }: DropdownCategoryProps) {
           isShowSubcategory ? "max-h-40 mt-2" : "max-h-0"
         } overflow-hidden transition-all duration-300 `}
       >
-        {dummySubcategories
-          .filter((subcategory) => subcategory.category === category.name)
+        {subcategories
+          .filter((subcategory) => subcategory.categoryId === category.id)
           .map((subcategory) => (
             <li key={subcategory.id} className="px-4 py-1">
               {subcategory.name}

@@ -1,11 +1,18 @@
+"use client";
 import Image from "next/image";
 import imagePaths from "@/constants/imagePaths";
-import categories from "@/constants/categories";
 import Link from "next/link";
+import Loader from "../Loader";
+import { useCategories } from "@/contexts/dataContext";
 
 export default function Categories() {
+  const { categories, loading, error } = useCategories();
+
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      {/* Loading */}
+      {loading && <Loader />}
+
       {/* Heading */}
       <div className="flex flex-row justify-between">
         <h2 className="text-darkBlue md:text-xl lg:text-2xl font-semibold">

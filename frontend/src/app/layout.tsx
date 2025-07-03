@@ -6,6 +6,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CategoryProvider } from "@/contexts/dataContext";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -27,9 +28,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.variable} font-sans`}>
         <AuthProvider>
-          <Header />
-          {children}
-          <Footer />
+          <CategoryProvider>
+            <Header />
+            {children}
+            <Footer />
+          </CategoryProvider>
         </AuthProvider>
       </body>
     </html>

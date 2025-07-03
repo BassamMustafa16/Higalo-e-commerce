@@ -29,19 +29,39 @@ model User {
   @@map("users")
 }
 
+model Category {
+  id            String         @id @default(cuid())
+  name          String         @unique
+  products      Product[]
+  subcategories Subcategory[]  
+
+}
+
+model Subcategory {
+  id         String    @id @default(cuid())
+  name       String
+  categoryId String
+  category   Category  @relation(fields: [categoryId], references: [id])
+
+  @@map("subcategories")
+}
+
+
 model Product {
-  id            String     @id @default(cuid())
+    id            String     @id @default(cuid())
   name          String
   price         Float
   image         String
   ribbon        String?
-  category      String
   discount      Boolean    @default(false)
   originalPrice Float?
   percentage    Int?
   description   String?
   inventory     Int
   itemsSold     Int        @default(0)
+
+  categoryId    String
+  category      Category   @relation(fields: [categoryId], references: [id])
 
   favorites     Favorite[]
   cartItems     CartItem[]

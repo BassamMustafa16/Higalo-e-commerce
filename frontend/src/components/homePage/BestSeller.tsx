@@ -3,9 +3,11 @@ import axios from "axios";
 import ProductImage from "./ProductImage";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/db";
+import Loader from "../Loader";
 
 export default function BestSeller() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchBestSellers() {
       try {
@@ -16,6 +18,8 @@ export default function BestSeller() {
         console.log(products);
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     }
     fetchBestSellers();
@@ -23,6 +27,9 @@ export default function BestSeller() {
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 py-5 bg-[#F7F7F7]">
+      {/* Loading */}
+      {loading && <Loader />}
+
       {/* Heading */}
       <div>
         <h2 className="text-darkBlue md:text-xl lg:text-2xl font-semibold">
