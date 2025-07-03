@@ -38,8 +38,12 @@ export const CategoryProvider = ({
         );
         setCategories(res.data.categories);
         setSubcategories(res.data.subcategories);
-      } catch (err: any) {
-        setError(err.message || "Error fetching categories");
+      } catch (err: unknown) {
+        if (err && typeof err === "object" && "message" in err) {
+          setError(String((err as { message?: unknown }).message));
+        } else {
+          setError("Error fetching categories");
+        }
       } finally {
         setLoading(false);
       }

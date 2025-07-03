@@ -6,7 +6,7 @@ import Loader from "../Loader";
 import { useCategories } from "@/contexts/dataContext";
 
 export default function Categories() {
-  const { categories, loading, error } = useCategories();
+  const { categories, loading } = useCategories();
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">

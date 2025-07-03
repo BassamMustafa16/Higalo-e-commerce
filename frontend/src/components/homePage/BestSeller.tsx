@@ -23,7 +23,7 @@ export default function BestSeller() {
       }
     }
     fetchBestSellers();
-  }, []);
+  }, [products]);
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 py-5 bg-[#F7F7F7]">
