@@ -1,11 +1,39 @@
-import poroducts from "@/constants/products";
+"use client";
+import axios from "axios";
 import ProductImage from "./ProductImage";
+import { useEffect, useState } from "react";
+
+type Product = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  ribbon: string;
+  category: string;
+  discount: boolean;
+  originalPrice: number | null;
+  percentage: number | null;
+  description: string;
+  inventory: number;
+  itemsSold: number;
+};
 
 export default function BestSeller() {
-  // Sort products descending by itemsSold
-  const sortedProducts = [...poroducts]
-    .sort((a, b) => b.itemsSold - a.itemsSold)
-    .slice(0, 4);
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    async function fetchBestSellers() {
+      try {
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/best-sellers`
+        );
+        if (res.status === 200) setProducts(Array.from(res.data));
+        console.log(products);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchBestSellers();
+  }, []);
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 py-5 bg-[#F7F7F7]">
@@ -17,7 +45,7 @@ export default function BestSeller() {
       </div>
       {/* Content */}
       <div className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {sortedProducts.map((product) => (
+        {products.map((product) => (
           <div
             key={product.id}
             className="flex flex-col md:flex-row gap-5 w-[100%] bg-white rounded-2xl overflow-hidden h-fit"
@@ -45,7 +73,7 @@ export default function BestSeller() {
               <p
                 className="text-xs text-gray-500 w-full"
                 dangerouslySetInnerHTML={{
-                  __html: product.describtion.replace(/\n/g, "<br />"),
+                  __html: product.description.replace(/\n/g, "<br />"),
                 }}
               />
             </div>
