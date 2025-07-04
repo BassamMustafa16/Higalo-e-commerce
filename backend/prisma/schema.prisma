@@ -48,7 +48,7 @@ model Subcategory {
 
 
 model Product {
-    id            String     @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String
   price         Float
   image         String
@@ -59,6 +59,9 @@ model Product {
   description   String?
   inventory     Int
   itemsSold     Int        @default(0)
+
+  images        String[]   @default([])
+  colors        String[]   @default([])
 
   categoryId    String
   category      Category   @relation(fields: [categoryId], references: [id])
@@ -71,6 +74,7 @@ model Product {
 
   @@map("products")
 }
+
 
 model Favorite {
   id         String   @id @default(cuid())

@@ -11,6 +11,8 @@ export type Product = {
   description: string;
   inventory: number;
   itemsSold: number;
+  images: string[];
+  colors: string[];
 };
 export type Category = {
   id: string;

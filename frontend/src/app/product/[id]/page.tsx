@@ -1,0 +1,31 @@
+// src/app/products/[id]/page.tsx
+import Slider from "@/components/productPage/Slider";
+import fetchProduct from "@/lib/fetchProduct";
+import { notFound } from "next/navigation";
+
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function ProductPage({ params }: Props) {
+  const { id } = await params;
+
+  // Fetch product details by id
+  const product = await fetchProduct({ id });
+  if (!product) return notFound();
+
+  return (
+    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      {/* Slider */}
+      <Slider images={product.images} />
+
+      {/* Product Content */}
+      <div></div>
+
+      {/* Taps */}
+      <div></div>
+    </div>
+  );
+}
