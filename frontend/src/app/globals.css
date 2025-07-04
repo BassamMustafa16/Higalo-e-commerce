@@ -18,26 +18,26 @@ a {
 @theme {
   --color-orange: #f69520;
   --color-darkBlue: #1d2554;
-  --color-darkOrange: #B36C17;
+  --color-darkOrange: #b36c17;
 }
 
 html {
   font-family: var(--font-work-sans), sans-serif;
 }
 
-.new{
-  background-color: #F69520;
+.new {
+  background-color: #f69520;
   color: white;
 }
-.favorite{
-  background-color: #FFE923;
+.favorite {
+  background-color: #ffe923;
   color: black;
 }
-.discount{
-  background-color: #FF8154;
+.discount {
+  background-color: #ff8154;
   color: white;
 }
-.sold-out{
-  background-color: #D6D6D6;
+.sold-out {
+  background-color: #d6d6d6;
   color: black;
 }

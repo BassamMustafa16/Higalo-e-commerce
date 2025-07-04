@@ -13,6 +13,7 @@ export type Product = {
   itemsSold: number;
   images: string[];
   colors: string[];
+  aspects: string[];
 };
 export type Category = {
   id: string;

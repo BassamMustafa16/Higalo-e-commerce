@@ -14,6 +14,7 @@ export default async function ProductPage({ params }: Props) {
 
   // Fetch product details by id
   const product = await fetchProduct({ id });
+  console.log(product);
   if (!product) return notFound();
 
   return (
@@ -22,7 +23,24 @@ export default async function ProductPage({ params }: Props) {
       <Slider images={product.images} />
 
       {/* Product Content */}
-      <div></div>
+      <div>
+        <h1>{product.name}</h1>
+        <h2>{product.price}</h2>
+        <p>Category: {product.category}</p>
+        <ul className="list-disc pl-5">
+          {product.aspects.map((aspect, index) => (
+            <li key={index}>{aspect}</li>
+          ))}
+        </ul>
+        <div className="flex flex-row gap-3">
+          {product.colors.map((color, index) => (
+            <div
+              key={index}
+              className={`bg-[${color}] w-8 aspect-square rounded-full`}
+            ></div>
+          ))}
+        </div>
+      </div>
 
       {/* Taps */}
       <div></div>
