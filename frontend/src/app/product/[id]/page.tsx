@@ -8,9 +8,10 @@ import Amount from "@/components/productPage/Amount";
 export default async function ProductPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  // Await the params Promise
+  const { id } = await params;
 
   // Fetch product details by id
   const product = await fetchProduct({ id });
