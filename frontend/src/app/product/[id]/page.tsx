@@ -5,13 +5,11 @@ import { notFound } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Amount from "@/components/productPage/Amount";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { id } = params;
 
   // Fetch product details by id
@@ -108,7 +106,7 @@ export default async function ProductPage({ params }: Props) {
       </div>
 
       {/* Amount */}
-      <Amount inStock={product.inventory}/>
+      <Amount inStock={product.inventory} />
 
       {/* Taps */}
       <div></div>
