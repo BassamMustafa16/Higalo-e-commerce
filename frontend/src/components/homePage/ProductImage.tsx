@@ -2,11 +2,8 @@
 import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
 import imagePaths from "@/constants/imagePaths";
-
-interface Product {
-  image: string;
-  name: string;
-}
+import { Product } from "@/types/db";
+import Link from "next/link";
 
 interface ProductImageProps {
   product: Product;
@@ -42,6 +39,9 @@ export default function ProductImage({ product }: ProductImageProps) {
             ? "opacity-100 z-20 pointer-events-auto"
             : "opacity-0 z-0 pointer-events-none"
         }`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setIsClicked(false);
+        }}
       >
         <div className="flex flex-row gap-5 justify-between w-full">
           <div className="bg-black px-4 py-2 w-full flex flex-row justify-center rounded-xl">
@@ -53,12 +53,14 @@ export default function ProductImage({ product }: ProductImageProps) {
             />
           </div>
           <div className="bg-black px-4 py-2 rounded-xl w-full flex flex-row justify-center">
-            <Image
-              src={`${imagePaths.icon}/viewOrange.svg`}
-              width={30}
-              height={18}
-              alt="Favorite"
-            />{" "}
+            <Link href={`/product/${product.id}`}>
+              <Image
+                src={`${imagePaths.icon}/viewOrange.svg`}
+                width={30}
+                height={18}
+                alt="Favorite"
+              />{" "}
+            </Link>
           </div>
         </div>
         <button
@@ -78,7 +80,7 @@ export default function ProductImage({ product }: ProductImageProps) {
         }`}
       >
         <Image
-          src={`${imagePaths.products}/${product.image}`}
+          src={`${imagePaths.products}/${product.images.mainImage}`}
           alt={product.name}
           fill
           sizes="100vw"

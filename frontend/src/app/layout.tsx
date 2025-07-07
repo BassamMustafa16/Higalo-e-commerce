@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Work_Sans } from "next/font/google"; // Add this line
 import "./globals.css";
+import "@/lib/fontawseome"
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 

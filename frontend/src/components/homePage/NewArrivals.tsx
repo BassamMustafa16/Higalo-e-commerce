@@ -26,7 +26,7 @@ export default function NewArrivals() {
     fetchNewArrivals();
   }, [newArrivals]);
   return (
-    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+    <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 bg-[#F7F7F7] py-5">
       {/* Loading */}
       {loading && <Loader />}
 

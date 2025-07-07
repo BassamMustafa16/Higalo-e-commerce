@@ -25,6 +25,8 @@ model User {
 
   favorites  Favorite[]
   cartItems  CartItem[]
+  ratings    Rating[]
+
 
   @@map("users")
 }
@@ -50,25 +52,20 @@ model Subcategory {
 model Product {
   id            String     @id @default(cuid())
   name          String
-  price         Float
-  image         String
-  ribbon        String?
-  discount      Boolean    @default(false)
-  originalPrice Float?
-  percentage    Int?
   description   String?
   inventory     Int
   itemsSold     Int        @default(0)
 
-  images        String[]   @default([])
-  colors        String[]   @default([])
-  aspects       String[]   @default([])
+  price         Json
+  images        Json
+  aspects       Json
 
   categoryId    String
   category      Category   @relation(fields: [categoryId], references: [id])
 
   favorites     Favorite[]
   cartItems     CartItem[]
+  ratings       Rating[]
 
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
@@ -102,4 +99,23 @@ model CartItem {
 
   @@unique([userId, productId])
   @@map("cart_items")
+}
+
+model Rating{
+  id String @id @default(cuid())
+
+  user User @relation(fields: [userId], references: [id])
+  userId String
+
+  product Product @relation(fields: [productId], references: [id])
+  productId String
+
+  rate Int
+  comment String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ratings")
+  @@unique([userId, productId])
 }

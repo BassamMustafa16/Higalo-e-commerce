@@ -1,19 +1,34 @@
+type Aspects = {
+  highlights?: string[];
+  colors?: string[];
+  ribbon?: string;
+  // add more fields as needed
+};
+type Price = {
+  originalPrice?: number;
+  salePercentage?: number;
+  finalPrice: number;
+  // add more fields as needed
+};
+
+export type Images = {
+  mainImage: string;
+  moreImages: string[];
+};
 export type Product = {
   id: string;
   name: string;
-  price: number;
-  image: string;
-  ribbon: string;
-  category: string;
-  discount: boolean;
-  originalPrice: number | null;
-  percentage: number | null;
+  price: Price;
+  categoryName: string;
   description: string;
   inventory: number;
   itemsSold: number;
-  images: string[];
+  images: Images;
   colors: string[];
-  aspects: string[];
+  aspects: Aspects;
+  averageRating: number;
+  ratingsCount: number;
+  roundedAverageRating: number;
 };
 export type Category = {
   id: string;

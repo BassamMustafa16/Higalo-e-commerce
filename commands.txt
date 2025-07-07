@@ -1,0 +1,10 @@
+# From Neon to local
+pg_dump -h ep-summer-union-a8fi7s3y-pooler.eastus2.azure.neon.tech -U neondb_owner -d neondb -p 5432 -Fc -f neon_backup.dump
+
+pg_restore -h localhost -U postgres -d localhigalo -c neon_backup.dump
+
+
+# From local to Neon
+pg_dump -h localhost -U postgres -d localhigalo -Fc -f local.dump
+
+pg_restore -h ep-summer-union-a8fi7s3y-pooler.eastus2.azure.neon.tech -U neondb_owner -d neondb -c local.dump

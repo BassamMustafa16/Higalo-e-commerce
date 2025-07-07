@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "products" ALTER COLUMN "images" DROP DEFAULT,
+ALTER COLUMN "images" SET DATA TYPE JSONB;
