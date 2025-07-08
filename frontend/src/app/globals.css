@@ -41,3 +41,11 @@ html {
   background-color: #d6d6d6;
   color: black;
 }
+
+button {
+  cursor: pointer;
+}
+
+button:active {
+  scale: 95%;
+}

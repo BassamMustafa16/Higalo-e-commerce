@@ -13,11 +13,11 @@ type SliderProps = {
 
 export default function Slider({ images }: SliderProps) {
   return (
-    <div className="w-full">
+    <div className="w-full md:w-1/2">
       <Swiper
         modules={[Navigation, Pagination]}
         navigation
-        pagination={{ clickable: true }}
+        pagination={{ clickable: false }}
         spaceBetween={10}
         slidesPerView={1}
         className="w-full"

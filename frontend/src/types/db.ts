@@ -1,4 +1,4 @@
-type Aspects = {
+export type Aspects = {
   highlights?: string[];
   colors?: string[];
   ribbon?: string;
@@ -11,10 +11,11 @@ type Price = {
   // add more fields as needed
 };
 
-export type Images = {
+type Images = {
   mainImage: string;
   moreImages: string[];
 };
+
 export type Product = {
   id: string;
   name: string;
