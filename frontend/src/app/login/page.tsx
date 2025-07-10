@@ -4,6 +4,7 @@ import Link from "next/link";
 export default function LoginPage() {
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 flex flex-col  lg:flex-row gap-5 items-center lg:items-start lg:justify-between py-5 md:py-10 bg-[#FCFCFC]">
+      
       {/* Registerd Customers */}
       <div className="flex-1 flex flex-col gap-2 max-w-sm w-full text-left">
         <h2 className="text-lg font-semibold">Registerd Customers</h2>

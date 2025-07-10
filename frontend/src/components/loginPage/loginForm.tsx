@@ -9,7 +9,7 @@ import Loader from "../loaders/Loader";
 
 export default function LoginForm() {
   const router = useRouter();
-  const { setUserName } = useAuth();
+  const { login } = useAuth();
   const [termsConfirmed, setTermsConfirmed] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showPassword, setShowPassword] = useState(false);
@@ -17,6 +17,7 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     //Extract data
     const form = e.currentTarget;
     const formData = new FormData(form);
@@ -30,6 +31,7 @@ export default function LoginForm() {
     });
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
+
     // Login
     setLoading(true);
     try {
@@ -40,13 +42,15 @@ export default function LoginForm() {
           password,
         }
       );
-      // Success logic
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("firstName", res.data.user.firstName);
-      localStorage.setItem("userId", res.data.user.id);
-      localStorage.setItem("role", res.data.user.role);
 
-      setUserName(res.data.user.firstName);
+      // Success logic
+      const { token, user } = res.data;
+      login({
+        token,
+        userName: user.firstName,
+        userId: user.id,
+        role: user.role,
+      });
       setLoading(false);
       router.push("/");
     } catch (err) {

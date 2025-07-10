@@ -5,8 +5,12 @@ import {
   faStarHalfStroke,
   faPlus,
   faMinus,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarStroke } from "@fortawesome/free-regular-svg-icons";
+import {
+  faStar as faStarStroke,
+  faHeart as faStrokeHeart,
+} from "@fortawesome/free-regular-svg-icons";
 
 library.add(
   faFacebookF,
@@ -14,5 +18,7 @@ library.add(
   faStar,
   faStarStroke,
   faPlus,
-  faMinus
+  faMinus,
+  faHeart,
+  faStrokeHeart
 );

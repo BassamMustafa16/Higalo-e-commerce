@@ -1,7 +1,9 @@
 import { jwtDecode } from "jwt-decode";
+type ValidateTokenProps = {
+  token: string;
+}
 
-export const validateToken = () => {
-  const token = localStorage.getItem("token");
+export const validateToken = ({token}: ValidateTokenProps) => {
   if (!token) {
     console.log("No Token");
     return false;

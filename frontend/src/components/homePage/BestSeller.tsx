@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@/types/db";
 import Loader from "../loaders/Loader";
 import ProductCard from "./ProductCard";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function BestSeller() {
   const [products, setProducts] = useState<Product[]>([]);

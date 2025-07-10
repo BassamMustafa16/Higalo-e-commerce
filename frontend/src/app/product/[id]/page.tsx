@@ -94,8 +94,11 @@ export default async function ProductPage({
 
         {/* Preorder contents */}
         <div className="flex flex-col gap-3">
-          
-          <PreOrder inStock={product.inventory} aspects={product.aspects} />
+          <PreOrder
+            inStock={product.inventory}
+            aspects={product.aspects}
+            productId={product.id}
+          />
         </div>
       </div>
 

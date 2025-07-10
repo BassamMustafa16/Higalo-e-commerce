@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
 import { Work_Sans } from "next/font/google"; // Add this line
 import "./globals.css";
-import "@/lib/fontawseome"
+import "@/lib/fontawseome";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 
@@ -27,7 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${workSans.variable} font-sans`}>
+      <body
+        className={`${workSans.variable} font-sans `}
+      >
         <AuthProvider>
           <CategoryProvider>
             <Header />

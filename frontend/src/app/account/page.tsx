@@ -1,15 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import clearStorage from "@/lib/clearStorage";
 
 export default function AccountPage() {
   const router = useRouter();
-  const { userName, setUserName } = useAuth();
+  const { userName, logout } = useAuth();
 
   const handleLogout = () => {
-    clearStorage();
-    setUserName(null);
+    logout();
     router.push("/");
   };
 

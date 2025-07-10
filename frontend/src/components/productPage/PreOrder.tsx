@@ -1,21 +1,31 @@
 "use client";
-import imagePaths from "@/constants/imagePaths";
-import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@/lib/fontawseome";
 import { Aspects } from "@/types/db";
 import ColorDiv from "./ColorDiv";
+import { addFavorite, removeFavorite } from "@/lib/favorite";
+import { useAuth } from "@/contexts/AuthContext";
 
 type AmountProps = {
   inStock: number;
   aspects: Aspects;
+  productId: string;
 };
 
-export default function PreOrder({ inStock, aspects }: AmountProps) {
+export default function PreOrder({ inStock, aspects, productId }: AmountProps) {
   const [amountInput, setAmountInput] = useState("0");
   const [selectedColor, setSelectedColor] = useState("");
   const [error, setError] = useState("");
+  const [favorited, setFavorited] = useState(false);
+
+  const { favorites } = useAuth();
+  useEffect(() => {
+    setFavorited(
+      favorites.find((favorite) => favorite.product.id === productId)
+    );
+  }, []);
+  console.log(favorited);
 
   const amountValue = Number(amountInput) || 0;
 
@@ -61,6 +71,21 @@ export default function PreOrder({ inStock, aspects }: AmountProps) {
     setAmountInput(val);
   };
 
+  const handleFavoriteClick = async (productId: string) => {
+    if (favorited) {
+      const res = await removeFavorite(productId);
+      if (res.status === 200) {
+        setFavorited(false);
+
+        return;
+      }
+    } else {
+      const res = await addFavorite(productId);
+      if (res.status === 201) {
+        setFavorited(true);
+      }
+    }
+  };
   return (
     <div className="flex flex-col gap-3">
       {/* Colors */}
@@ -122,17 +147,20 @@ export default function PreOrder({ inStock, aspects }: AmountProps) {
 
           {/* Buttons */}
           <div className="flex flex-row justify-between gap-3 w-full">
+            {/* Add to cart */}
             <button className="bg-orange text-white py-1 rounded-md flex-3">
               Add to Cart
             </button>
-            <button className="flex flex-col justify-center items-center flex-1 bg-darkBlue rounded-md py-1">
+
+            {/* Add to favorite */}
+            <button
+              className="flex flex-col justify-center items-center flex-1 bg-darkBlue rounded-md py-1"
+              onClick={() => handleFavoriteClick(productId)}
+            >
               <div className="w-full relative h-full">
-                <Image
-                  src={`${imagePaths.icon}/favorite.svg`}
-                  alt="Favorite"
-                  fill
-                  sizes="100vw"
-                  className="object-fill"
+                <FontAwesomeIcon
+                  icon={[`${favorited ? "fas" : "far"}`, "heart"]}
+                  className="w-3 aspect-square text-white"
                 />
               </div>
             </button>
