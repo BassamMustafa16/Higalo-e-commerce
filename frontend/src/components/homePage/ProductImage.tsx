@@ -4,14 +4,20 @@ import Image from "next/image";
 import imagePaths from "@/constants/imagePaths";
 import { Product } from "@/types/db";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "@/contexts/AuthContext";
+import { addFavorite, removeFavorite } from "@/lib/favorite";
 
 interface ProductImageProps {
   product: Product;
 }
 
 export default function ProductImage({ product }: ProductImageProps) {
+  const [favorited, setFavorited] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const clickedRef = useRef<HTMLDivElement>(null);
+
+  const { favorites, setFavorites } = useAuth();
 
   useEffect(() => {
     if (!isClicked) return;
@@ -24,10 +30,41 @@ export default function ProductImage({ product }: ProductImageProps) {
         setIsClicked(false);
       }
     }
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isClicked]);
+
+  useEffect(() => {
+    const isFavorited = favorites.some(
+      (favorite) => favorite?.product?.id === product.id
+    );
+    setFavorited(isFavorited);
+  }, [favorites, product.id]);
+
+  const handleFavoriteClick = async (productId: string) => {
+    // Handle Remove Favorite
+    if (favorited) {
+      try {
+        const res = await removeFavorite(productId);
+        if (res?.status === 200) {
+          setFavorites(favorites.filter((fav) => fav.product.id !== productId));
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      // Handle Add Favorite
+    } else {
+      try {
+        const res = await addFavorite(productId);
+        if (res?.status === 201) {
+          setFavorites([res.data, ...favorites]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
 
   return (
     <div className="relative flex-1 aspect-square">
@@ -44,15 +81,17 @@ export default function ProductImage({ product }: ProductImageProps) {
         }}
       >
         <div className="flex flex-row gap-5 justify-between w-full">
-          <div className="bg-black px-4 py-2 w-full flex flex-row justify-center rounded-xl">
-            <Image
-              src={`${imagePaths.icon}/favoriteOrange.svg`}
-              width={30}
-              height={18}
-              alt="Favorite"
+          <button
+            className="bg-black h-12 py-3 px4 flex-1 w-full flex justify-center items-center rounded-xl"
+            onClick={() => handleFavoriteClick(product.id)}
+          >
+            <FontAwesomeIcon
+              icon={[`${favorited ? "fas" : "far"}`, "heart"]}
+              className="text-orange h-full w-auto"
+              style={{ height: "100%" }}
             />
-          </div>
-          <div className="bg-black px-4 py-2 rounded-xl w-full flex flex-row justify-center">
+          </button>
+          <button className="bg-black h-12 py-2 px4 flex-1 w-full flex justify-center items-center rounded-xl">
             <Link href={`/product/${product.id}`}>
               <Image
                 src={`${imagePaths.icon}/viewOrange.svg`}
@@ -61,7 +100,7 @@ export default function ProductImage({ product }: ProductImageProps) {
                 alt="Favorite"
               />{" "}
             </Link>
-          </div>
+          </button>
         </div>
         <button
           className="w-full py-2 bg-orange text-white rounded-xl"
