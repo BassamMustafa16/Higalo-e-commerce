@@ -40,3 +40,10 @@ export type Subcategories = {
   name: string;
   categoryId: string;
 };
+
+export type Favorite = {
+  id: string;
+  userId: string;
+  productId: string;
+  product: Product;
+};

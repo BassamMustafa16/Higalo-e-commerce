@@ -3,7 +3,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { validateToken } from "@/lib/validateToken";
 import clearStorage from "@/lib/clearStorage";
 import axios from "axios";
+import { Favorite } from "@/types/db";
 
+// Types
 type Role = "USER" | "ADMIN" | "MODERATOR" | null;
 
 type AuthContextType = {
@@ -11,8 +13,8 @@ type AuthContextType = {
   userId: string | null;
   role: Role;
   token: string | null;
-  favorites: any[]; // Adjust type as needed
-  setFavorites: (favorites: any[]) => void;
+  favorites: Favorite[]; // Adjust type as needed
+  setFavorites: (favorites: Favorite[]) => void;
   login: (data: {
     token: string;
     userName: string;
@@ -38,11 +40,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [userId, setUserId] = useState<string | null>(null);
   const [role, setRole] = useState<Role>(null);
   const [token, setToken] = useState<string | null>(null);
-  const [favorites, setFavorites] = useState<any[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    const storedName = localStorage.getItem("firstName");
+    const storedName = localStorage.getItem("userName");
     const storedId = localStorage.getItem("userId");
     const storedRole = localStorage.getItem("role") as Role;
 
@@ -75,6 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fetchFavorites();
   }, []);
 
+  // Login logic
   const login = async ({
     token,
     userName,

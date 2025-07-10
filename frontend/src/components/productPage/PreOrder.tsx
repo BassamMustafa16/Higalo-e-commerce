@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "@/lib/fontawseome";
-import { Aspects } from "@/types/db";
+import { Aspects, Favorite } from "@/types/db";
 import ColorDiv from "./ColorDiv";
 import { addFavorite, removeFavorite } from "@/lib/favorite";
 import { useAuth } from "@/contexts/AuthContext";
@@ -19,13 +19,14 @@ export default function PreOrder({ inStock, aspects, productId }: AmountProps) {
   const [error, setError] = useState("");
   const [favorited, setFavorited] = useState(false);
 
-  const { favorites } = useAuth();
+  const { favorites, setFavorites } = useAuth();
+
   useEffect(() => {
-    setFavorited(
-      favorites.find((favorite) => favorite.product.id === productId)
+    const isFavorited = favorites.some(
+      (favorite) => favorite?.product?.id === productId
     );
-  }, []);
-  console.log(favorited);
+    setFavorited(isFavorited);
+  }, [favorites, productId]);
 
   const amountValue = Number(amountInput) || 0;
 
@@ -72,17 +73,26 @@ export default function PreOrder({ inStock, aspects, productId }: AmountProps) {
   };
 
   const handleFavoriteClick = async (productId: string) => {
+    // Handle Remove Favorite
     if (favorited) {
-      const res = await removeFavorite(productId);
-      if (res.status === 200) {
-        setFavorited(false);
-
-        return;
+      try {
+        const res = await removeFavorite(productId);
+        if (res?.status === 200) {
+          setFavorites(favorites.filter((fav) => fav.product.id !== productId));
+        }
+      } catch (err) {
+        console.log(err);
       }
+
+      // Handle Add Favorite
     } else {
-      const res = await addFavorite(productId);
-      if (res.status === 201) {
-        setFavorited(true);
+      try {
+        const res = await addFavorite(productId);
+        if (res?.status === 201) {
+          setFavorites([res.data, ...favorites]);
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
   };

@@ -15,7 +15,6 @@ export default async function ProductPage({
 
   // Fetch product details by id
   const product = await fetchProduct({ id });
-  console.log(product);
   if (!product) return notFound();
 
   return (

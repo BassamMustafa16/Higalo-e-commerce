@@ -1,10 +1,11 @@
+import { useAuth } from "@/contexts/AuthContext";
 import axios from "axios";
 
 export const addFavorite = async (productId: string) => {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Kindly login to start adding to favorites");
-    return;
+    throw new Error("No Token");
   }
 
   try {
@@ -17,7 +18,7 @@ export const addFavorite = async (productId: string) => {
         },
       }
     );
-    return res.data;
+    return res;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       // Axios error (can be network or server returned error)
@@ -37,11 +38,11 @@ export const removeFavorite = async (productId: string) => {
   const token = localStorage.getItem("token");
   if (!token) {
     alert("Kindly login to start adding to favorites");
-    return;
+    throw new Error("No Token");;
   }
   try {
     const res = await axios.delete(
-      `${process.env.NEXT_PUBLIC_API_URL}/favorite/delete-favorite`,
+      `${process.env.NEXT_PUBLIC_API_URL}/favorite/remove-favorite`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -49,7 +50,7 @@ export const removeFavorite = async (productId: string) => {
         data: { productId },
       }
     );
-    return res.data;
+    return res;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       // Axios error (can be network or server returned error)

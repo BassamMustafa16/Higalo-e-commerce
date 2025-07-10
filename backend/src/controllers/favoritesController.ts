@@ -43,6 +43,7 @@ export const addFavorite = async (req: Request, res: Response) => {
 
     const favorite = await prisma.favorite.create({
       data: { userId, productId },
+      include: { product: true },
     });
     res.status(201).json(favorite);
   } catch (err) {
